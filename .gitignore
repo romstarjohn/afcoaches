@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Django
+staticfiles/
+media/
+*.sqlite3
+*.mo
+
+# IDE (keep shared run configs out too; workspace is personal)
+.idea/
+.DS_Store

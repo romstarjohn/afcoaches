@@ -1,0 +1,19 @@
+# Local development database only. Credentials are for local use, not for any shared environment.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: coach
+      POSTGRES_PASSWORD: coach
+      POSTGRES_DB: coachsurmesure
+    ports:
+      - "127.0.0.1:${DB_PORT:-55432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coach -d coachsurmesure"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  pgdata:
