@@ -23,10 +23,12 @@ The skills can pull in different directions: `frontend-design` pushes for distin
 
 ## Existing baseline (reuse, don't parallel-build)
 
-- Tokens in `:root` of `src/index.css`: `--bg --surface --fg --muted --accent --accent-fg --ok --warn --offline --border --radius`, with a `prefers-color-scheme: dark` set. Extend these; no hard-coded hex in components.
+- Tokens in `:root` of `src/index.css`: brand `--brand --brand-fg` (dark blue), action `--accent --accent-fg` (green), `--accent-on-brand(-fg)` (lighter green for elements on the dark-blue header), `--bg --surface --fg --muted --border --ok --warn --offline`, shape `--radius --radius-sm`, with a `prefers-color-scheme: dark` set. Extend these; no hard-coded hex in components.
+- Type scale tokens (native app conventions, Material 3 / iOS HIG, in rem): `--text-caption` 12 · `--text-footnote` 13 · `--text-label` 14 · `--text-body` 16 (17 on iOS via Dynamic Type `font: -apple-system-body`) · `--text-title` 20 · `--text-title-lg` 22 (app bar) · `--text-headline` 28. Use the tokens, never px font sizes; inputs and buttons use `--text-body`.
 - **No inline styles / `style` attributes in markup:** CSP allows `style-src 'self'` only. Use classes.
 - Font: system stack. Adding a webfont costs performance and offline precache size; justify it first (self-host, `woff2`, `font-display: swap`).
-- `theme_color` `#b5541c` in the manifest must stay consistent with `--accent`.
+- Colors decided by product owner 2026-11-17: **dark blue + green**. Manifest `theme_color` `#0b2a4a` = `--brand` (light), dark-mode meta theme-color `#0d1c30`; `background_color` `#f5f8fb` = `--bg`. Keep manifest, `index.html`, `public/logo.svg` and tokens in sync.
+- Green on the dark-blue header: use `--accent-on-brand` (the regular `--accent` fails 3:1 there).
 
 ## Layout and safe areas
 

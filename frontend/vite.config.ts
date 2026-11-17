@@ -27,8 +27,8 @@ export default defineConfig({
         scope: '/',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#fffaf5',
-        theme_color: '#b5541c',
+        background_color: '#f5f8fb',
+        theme_color: '#0b2a4a',
       },
       workbox: {
         // App shell only. API responses are NEVER cached by the service worker: personal/health data

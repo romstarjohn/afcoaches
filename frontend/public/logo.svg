@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Placeholder logo until the brand identity exists. -->
-  <rect width="512" height="512" rx="96" fill="#b5541c"/>
-  <circle cx="256" cy="256" r="150" fill="none" stroke="#fff4e8" stroke-width="28"/>
-  <path d="M196 300c22 30 98 30 120 0" fill="none" stroke="#fff4e8" stroke-width="28" stroke-linecap="round"/>
-  <circle cx="206" cy="222" r="20" fill="#fff4e8"/>
-  <circle cx="306" cy="222" r="20" fill="#fff4e8"/>
+  <!-- Placeholder logo until the brand identity exists: dark blue (brand) + green (accent). -->
+  <rect width="512" height="512" rx="96" fill="#0b2a4a"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#3fcb87" stroke-width="28"/>
+  <path d="M196 300c22 30 98 30 120 0" fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="206" cy="222" r="20" fill="#ffffff"/>
+  <circle cx="306" cy="222" r="20" fill="#ffffff"/>
 </svg>

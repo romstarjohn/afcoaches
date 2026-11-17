@@ -1,101 +1,171 @@
-/* No inline styles anywhere: the CSP allows styles from 'self' only. */
+/* No inline styles anywhere: the CSP allows styles from 'self' only.
+ *
+ * Colors: dark blue = brand (header, system bars, icon) · green = actions and active states.
+ * Contrast verified (WCAG AA) for every text/background pair in light and dark mode.
+ *
+ * Type scale follows native app conventions (Material 3 / iOS HIG), in rem so the user's text size
+ * setting applies. Base: 16px (Android/Material body) and iOS Dynamic Type body (17pt by default).
+ */
 :root {
-  --bg: #fffaf5;
-  --surface: #ffffff;
-  --fg: #1f1a17;
-  --muted: #6b5f57;
-  --accent: #b5541c;
+  /* Brand */
+  --brand: #0b2a4a; /* dark blue */
+  --brand-fg: #ffffff;
+  --accent: #16794a; /* green, AA on light backgrounds */
   --accent-fg: #ffffff;
-  --ok: #2f7d4f;
-  --warn: #a15c00;
-  --offline: #6b5f57;
-  --border: #eadfd6;
+  --accent-on-brand: #3fcb87; /* lighter green for use on the dark-blue header */
+  --accent-on-brand-fg: #06200f;
+
+  /* Surfaces & text */
+  --bg: #f5f8fb;
+  --surface: #ffffff;
+  --fg: #0f1b2d;
+  --muted: #4a5b70;
+  --border: #d5dee8;
+  --brand-border: rgb(255 255 255 / 0.45);
+
+  /* Status (always paired with text, never color alone) */
+  --ok: #16794a;
+  --warn: #9a5b00;
+  --offline: #5b6b7f;
+
+  /* Type scale */
+  --text-caption: 0.75rem; /* 12 – captions, badges */
+  --text-footnote: 0.8125rem; /* 13 – status lines, hints */
+  --text-label: 0.875rem; /* 14 – secondary text, labels */
+  --text-body: 1rem; /* 16 / 17 iOS – body, buttons, inputs (never smaller: iOS zooms) */
+  --text-title: 1.25rem; /* 20 – card and section titles */
+  --text-title-lg: 1.375rem; /* 22 – app bar title */
+  --text-headline: 1.75rem; /* 28 – screen headline */
+  --leading-tight: 1.2;
+  --leading-body: 1.5;
+
+  /* Shape & spacing */
   --radius: 12px;
+  --radius-sm: 8px;
   --gutter-l: max(16px, env(safe-area-inset-left));
   --gutter-r: max(16px, env(safe-area-inset-right));
+
   color-scheme: light dark;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161210;
-    --surface: #1f1a17;
-    --fg: #f5ede6;
-    --muted: #b7a99f;
-    --accent: #e88a4f;
-    --accent-fg: #1f1a17;
-    --ok: #6fcf97;
+    --brand: #0d1c30;
+    --brand-fg: #eaf1f8;
+    --accent: #3fcb87;
+    --accent-fg: #06200f;
+    --accent-on-brand: #3fcb87;
+    --accent-on-brand-fg: #06200f;
+    --bg: #0a1422;
+    --surface: #112035;
+    --fg: #eaf1f8;
+    --muted: #a9b8ca;
+    --border: #22344d;
+    --brand-border: rgb(234 241 248 / 0.35);
+    --ok: #3fcb87;
     --warn: #f2b25c;
-    --offline: #b7a99f;
-    --border: #3a312b;
+    --offline: #a9b8ca;
   }
 }
 
+/* ---- Base ---------------------------------------------------------------------------- */
 * { box-sizing: border-box; }
-html, body { margin: 0; }
+html { font-size: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* iOS Safari: follow the system text size (Dynamic Type), like native apps do. */
+@supports (font: -apple-system-body) {
+  html { font: -apple-system-body; }
+}
 body {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+h1, h2, h3 { line-height: var(--leading-tight); margin: 0 0 12px; letter-spacing: -0.01em; }
+h1 { font-size: var(--text-headline); font-weight: 700; }
+h2 { font-size: var(--text-title); font-weight: 600; }
+h3 { font-size: var(--text-body); font-weight: 600; }
+p { margin: 0 0 12px; }
+a { color: var(--accent); text-underline-offset: 2px; }
+button, input, select, textarea { font: inherit; font-size: var(--text-body); }
 
+/* ---- App shell ----------------------------------------------------------------------- */
 .app { min-height: 100dvh; display: flex; flex-direction: column; }
 .app-header {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: max(12px, env(safe-area-inset-top)) var(--gutter-r) 12px var(--gutter-l);
-  border-bottom: 1px solid var(--border); background: var(--surface);
+  padding: max(10px, env(safe-area-inset-top)) var(--gutter-r) 10px var(--gutter-l);
+  min-height: 56px; /* Material top app bar */
+  background: var(--brand); color: var(--brand-fg);
 }
-.brand { color: var(--accent); font-weight: 700; text-decoration: none; font-size: 1.1rem; }
+.brand {
+  color: var(--brand-fg); font-weight: 700; text-decoration: none;
+  font-size: var(--text-title-lg); line-height: var(--leading-tight);
+}
 .app-main {
   flex: 1; width: 100%; max-width: 960px; margin: 0 auto;
   padding: 24px var(--gutter-r) max(48px, env(safe-area-inset-bottom)) var(--gutter-l);
 }
 .app-main p { max-width: 70ch; }
-.lead { font-size: 1.15rem; color: var(--muted); }
+.lead { font-size: var(--text-title); line-height: 1.4; color: var(--muted); }
 
 .lang-switch { display: flex; gap: 4px; }
 .lang-switch__btn {
-  min-width: 44px; min-height: 44px; border: 1px solid var(--border); border-radius: 8px;
-  background: transparent; color: var(--fg); font: inherit; font-weight: 600; cursor: pointer;
+  min-width: 44px; min-height: 44px; border: 1px solid var(--brand-border); border-radius: var(--radius-sm);
+  background: transparent; color: var(--brand-fg); font-size: var(--text-label); font-weight: 600; cursor: pointer;
 }
-.lang-switch__btn[aria-pressed='true'] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.lang-switch__btn[aria-pressed='true'] {
+  background: var(--accent-on-brand); color: var(--accent-on-brand-fg); border-color: var(--accent-on-brand);
+}
 
+/* ---- Sync status --------------------------------------------------------------------- */
 .sync-status {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-  padding: 6px var(--gutter-r) 6px var(--gutter-l); font-size: 0.875rem; color: var(--muted);
+  padding: 6px var(--gutter-r) 6px var(--gutter-l);
+  font-size: var(--text-footnote); color: var(--muted);
+  background: var(--surface); border-bottom: 1px solid var(--border);
 }
-.sync-status__retry { margin-left: auto; min-height: 44px; }
 .sync-status__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
 .sync-status--offline .sync-status__dot { background: var(--offline); }
 .sync-status--warn { color: var(--warn); }
 .sync-status--warn .sync-status__dot { background: var(--warn); }
+.sync-status__retry { margin-left: auto; }
+
+/* ---- Components ---------------------------------------------------------------------- */
+.button {
+  min-height: 44px; padding: 0 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--surface); color: var(--fg); font-size: var(--text-body); font-weight: 600; cursor: pointer;
+}
+.button--primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { filter: brightness(0.96); }
+}
+button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.app-header button:focus-visible, .app-header a:focus-visible { outline-color: var(--accent-on-brand); }
 
 .toast {
   position: fixed; left: var(--gutter-l); right: var(--gutter-r); bottom: max(16px, env(safe-area-inset-bottom));
   max-width: 480px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-  padding: 12px 16px; border-radius: var(--radius); background: var(--surface);
-  border: 1px solid var(--border); box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+  padding: 12px 16px; border-radius: var(--radius); background: var(--surface); color: var(--fg);
+  border: 1px solid var(--border); box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+  font-size: var(--text-label);
 }
 .toast > span { flex: 1 1 200px; }
-.button {
-  min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border);
-  background: transparent; color: var(--fg); font: inherit; cursor: pointer;
-}
-.button--primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
-button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-.visually-hidden {
-  position: absolute; width: 1px; height: 1px; overflow: hidden;
-  clip: rect(0 0 0 0); white-space: nowrap;
-}
 
 .card {
   margin-top: 24px; padding: 16px; border: 1px solid var(--border);
   border-radius: var(--radius); background: var(--surface);
 }
-.card__title { margin: 0 0 4px; font-size: 1.05rem; }
+.card__title { margin: 0 0 4px; font-size: var(--text-title); }
+.card p { color: var(--muted); font-size: var(--text-label); margin: 0; }
 .card__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
