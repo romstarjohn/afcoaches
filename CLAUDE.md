@@ -1,6 +1,6 @@
 # CLAUDE.md — coachsurmesure
 
-Multi-coach fitness & nutrition platform for people with a West African background. France first, FR (default) + EN.
+Multi-coach fitness & nutrition platform for people with an African background. France first, EN (default) + FR.
 Offline-first installed PWA (React SPA) + Django/DRF API on the same origin.
 
 Read before working: `docs/definition-of-done.md` (scope, quality bar), `docs/architecture.md` (sync contract),
@@ -33,6 +33,7 @@ Read before working: `docs/definition-of-done.md` (scope, quality bar), `docs/ar
 # Backend (repo root)
 docker compose up -d db                       # Postgres on 127.0.0.1:55432
 .venv/bin/python manage.py runserver          # API :8000
+.venv/bin/python manage.py send_mail_outbox   # mail worker: emails are queued by the API and sent from here (dev: prints to console)
 .venv/bin/pytest tests/test_api.py -k sync    # targeted tests (preferred)
 .venv/bin/ruff check . && .venv/bin/ruff format .
 
@@ -49,7 +50,7 @@ tools/backlog.py find-duplicates --title "..." --slug "..."
 ## Structure
 
 - `config/` settings/urls · `apps/core` SPA serving, CSP, healthz · `apps/accounts` custom User ·
-  `apps/api` auth endpoints · `apps/sync` offline sync registry + push endpoint · `tests/` backend tests
+  `apps/api` auth endpoints · `apps/mailer` email outbox + worker · `apps/sync` offline sync registry + push endpoint · `tests/` backend tests
 - `frontend/src/` — `api/client.ts` (session + CSRF), `offline/` (Dexie outbox, SyncEngine), `pwa/`,
   `components/`, `pages/`, `locales/fr.json|en.json`
 - `docs/` DoD, architecture, backlogs · `tools/backlog.py` · `.claude/skills/` (backlog, pwa-expert, pwa-design)

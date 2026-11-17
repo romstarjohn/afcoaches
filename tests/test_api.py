@@ -13,7 +13,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.fixture
 def user():
-    return get_user_model().objects.create_user("alice", "alice@example.invalid", "a-long-test-password")
+    return get_user_model().objects.create_user("alice@example.invalid", "a-long-test-password")
 
 
 @pytest.fixture
@@ -77,7 +77,14 @@ def test_me_requires_login():
 
 def test_me_returns_current_user(api, user):
     body = api.get("/api/v1/auth/me").json()
-    assert body == {"id": user.id, "username": "alice", "email": "alice@example.invalid"}
+    assert body == {
+        "id": user.id,
+        "email": "alice@example.invalid",
+        "display_name": "",
+        "language": "en",
+        "role": "member",
+        "email_verified": False,
+    }
 
 
 def test_api_rejects_non_json_renderer_requests(api):

@@ -1,6 +1,6 @@
 # Coach sur mesure
 
-Multi-coach fitness and nutrition platform for people with a West African background (France first, FR/EN).
+Multi-coach fitness and nutrition platform for people with an African background (France first, FR/EN).
 Installable PWA that keeps working offline and syncs when the connection is back.
 
 - Product scope and quality bar: [`docs/definition-of-done.md`](docs/definition-of-done.md)
@@ -54,9 +54,20 @@ cd frontend && npm run lint && npm run typecheck && npm test && npm run build
 
 ## Configuration
 
-All configuration comes from environment variables (see `.env.example`). With `DJANGO_DEBUG=false`
+All configuration comes from environment variables (see `.env.example`). A local `.env` is read with
+`django-dotenv`; real environment variables always win. With `DJANGO_DEBUG=false`
 the app refuses to start without `DJANGO_SECRET_KEY` and enforces HTTPS, secure cookies and HSTS.
 `GET /healthz` checks the database and is meant for hosting/monitoring probes.
+
+**Environment flag:** `DJANGO_ENV=dev|prod` (default `prod`, fails safe). It selects the logging profile,
+the log directory and the `DJANGO_DEBUG` default; `DJANGO_DEBUG=true` is rejected unless `DJANGO_ENV=dev`.
+If you already have a `.env`, add `DJANGO_ENV=dev`.
+
+## Logging and observability
+
+Rotating logs go to `logs/dev/` or `logs/prod/` depending on `DJANGO_ENV` (text in dev, JSON in prod; the
+console always gets the same output). Every request has an `X-Request-ID` that appears on each log line.
+Rules for developers and the observability part of the definition of done: [`docs/observability.md`](docs/observability.md).
 
 ## Docker image
 

@@ -7,13 +7,13 @@
 
 ## Summary
 
-The core differentiator: ingredients and West African dishes with automatically calculated macros and a
+The core differentiator: ingredients and African dishes with automatically calculated macros and a
 verification workflow by a qualified nutrition professional.
 
 ## Reference
 
 - docs/definition-of-done.md §2.5 (fields, verified flag, macro tests +-2 %, admin editing)
-- Market analysis: competitors lack verified West African data; recipe variance (e.g. jollof Lagos vs Accra) is the main error source
+- Market analysis: competitors lack verified African data; recipe variance (e.g. jollof Lagos vs Accra) is the main error source
 
 ## Scope Hint
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 13:24+0100\n"
+"POT-Creation-Date: 2026-11-17 14:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: config/settings.py:117
+#: apps/accounts/emails.py:56
+msgid "Confirm your email address"
+msgstr ""
+
+#: apps/accounts/emails.py:58
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Please confirm your email address to finish setting up your account:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 3 days. If you did not create an account, ignore this "
+"email."
+msgstr ""
+
+#: apps/accounts/emails.py:71
+msgid "You already have an account"
+msgstr ""
+
+#: apps/accounts/emails.py:73
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Someone tried to create an account with this email address, but you already "
+"have one. You can simply log in. If you forgot your password, use “Forgot "
+"password” on the login page.\n"
+"\n"
+"If this was not you, ignore this email."
+msgstr ""
+
+#: apps/accounts/emails.py:99
+msgid "Reset your password"
+msgstr ""
+
+#: apps/accounts/emails.py:101
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Use this link to choose a new password:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 2 hours and can be used once. If you did not ask for "
+"this, ignore this email: your password stays unchanged."
+msgstr ""
+
+#: apps/accounts/emails.py:117
+msgid "Your verification code"
+msgstr ""
+
+#: apps/accounts/emails.py:119
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Your code to change your password is: %(code)s\n"
+"\n"
+"It is valid for 10 minutes. If you did not ask for this, someone may know "
+"your password: please change it."
+msgstr ""
+
+#: apps/accounts/emails.py:149
+msgid "Confirm your new email address"
+msgstr ""
+
+#: apps/accounts/emails.py:151
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Confirm this address as the new email of your account:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 3 days. If you did not ask for this, ignore this email."
+msgstr ""
+
+#: apps/accounts/emails.py:164
+msgid "Your email address was changed"
+msgstr ""
+
+#: apps/accounts/emails.py:166
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"The email address of your account was changed to %(new)s. If this was not "
+"you, reset your password immediately and contact us."
+msgstr ""
+
+#: apps/accounts/models.py:36
+msgid "Member"
+msgstr ""
+
+#: apps/accounts/models.py:39
+msgid "email address"
+msgstr ""
+
+#: apps/accounts/models.py:40
+msgid "display name"
+msgstr ""
+
+#: apps/accounts/models.py:41
+msgid "language"
+msgstr ""
+
+#: config/settings.py:120
 msgid "French"
 msgstr ""
 
-#: config/settings.py:117
+#: config/settings.py:120
 msgid "English"
 msgstr ""

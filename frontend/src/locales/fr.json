@@ -1,7 +1,30 @@
 {
   "app": {
     "name": "Coach sur mesure",
-    "tagline": "Coaching sportif et nutritionnel ancré dans la cuisine d’Afrique de l’Ouest."
+    "tagline": "Coaching sportif et nutritionnel ancré dans la cuisine d’Afrique."
+  },
+  "nav": {
+    "label": "Menu principal",
+    "home": "Accueil",
+    "coaches": "Coachs",
+    "settings": "Réglages"
+  },
+  "coaches": {
+    "title": "Coachs",
+    "empty": "Les coachs que vous pourrez suivre apparaîtront bientôt ici."
+  },
+  "settings": {
+    "title": "Réglages",
+    "languageTitle": "Langue",
+    "languageHelp": "Choisissez la langue de l’application. Elle est enregistrée sur cet appareil.",
+    "account": {
+      "title": "Compte",
+      "signedInAs": "Connecté en tant que",
+      "signedOut": "Vous n’êtes pas connecté.",
+      "verified": "Adresse e-mail vérifiée.",
+      "notVerified": "Adresse e-mail pas encore vérifiée. Certaines fonctions restent verrouillées tant que vous ne l’avez pas confirmée.",
+      "logout": "Se déconnecter"
+    }
   },
   "lang": {
     "label": "Langue",
@@ -40,5 +63,105 @@
     "ios": "Sur iPhone : touchez « Partager » puis « Sur l’écran d’accueil » pour installer l’application et l’utiliser hors ligne.",
     "action": "Installer",
     "later": "Plus tard"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?"
+    },
+    "fields": {
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "name": "Votre nom",
+      "language": "Langue",
+      "newPassword": "Nouveau mot de passe",
+      "showPassword": "Afficher le mot de passe",
+      "passwordHint": "Au moins {{count}} caractères."
+    },
+    "errors": {
+      "invalidCredentials": "L’adresse e-mail ou le mot de passe est incorrect.",
+      "tooManyAttempts": "Trop de tentatives. Patientez 15 minutes avant de réessayer.",
+      "network": "Pas de connexion. La connexion nécessite internet.",
+      "generic": "Une erreur est survenue. Veuillez réessayer.",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "passwordShort": "Utilisez au moins {{count}} caractères.",
+      "nameRequired": "Saisissez votre nom.",
+      "tooManyRequests": "Trop de demandes. Veuillez réessayer plus tard."
+    },
+    "register": {
+      "title": "Créer un compte",
+      "step": "Étape {{current}} sur {{total}}",
+      "next": "Continuer",
+      "back": "Retour",
+      "submit": "Créer mon compte",
+      "haveAccount": "Vous avez déjà un compte ?"
+    },
+    "checkInbox": {
+      "title": "Vérifiez votre boîte mail",
+      "body": "Nous avons envoyé un lien à {{email}}. Si vous aviez déjà un compte avec cette adresse, connectez-vous simplement."
+    },
+    "verify": {
+      "title": "Adresse e-mail",
+      "verifying": "Confirmation de votre adresse e-mail…",
+      "verified": "Votre adresse e-mail est confirmée. Merci !",
+      "invalid": "Ce lien est invalide ou a expiré. Connectez-vous et demandez un nouvel e-mail depuis le bandeau.",
+      "offline": "Pas de connexion. Ouvrez à nouveau le lien lorsque vous êtes en ligne.",
+      "error": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "intro": "Saisissez votre adresse e-mail : nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+      "submit": "Envoyer le lien",
+      "sent": "Si un compte existe pour cette adresse, un lien est en route. Il est valable 2 heures."
+    },
+    "reset": {
+      "title": "Nouveau mot de passe",
+      "submit": "Enregistrer le mot de passe",
+      "done": "Votre mot de passe a été modifié. Vous pouvez vous connecter.",
+      "invalid": "Ce lien est invalide ou a expiré. Demandez-en un nouveau."
+    },
+    "banner": {
+      "label": "Vérification de l’e-mail",
+      "text": "Veuillez confirmer votre adresse e-mail. Consultez votre boîte mail.",
+      "resend": "Renvoyer l’e-mail",
+      "sent": "E-mail envoyé. Consultez votre boîte mail."
+    }
+  },
+  "account": {
+    "back": "Retour aux réglages",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "name": {
+      "title": "Modifier le nom"
+    },
+    "email": {
+      "title": "Modifier l’adresse e-mail",
+      "newEmail": "Nouvelle adresse e-mail",
+      "submit": "Envoyer le lien de confirmation",
+      "sent": "Nous avons envoyé un lien à {{email}}. Votre adresse change dès que vous l’ouvrez."
+    },
+    "password": {
+      "title": "Modifier le mot de passe",
+      "intro": "Pour votre sécurité, nous envoyons un code à votre adresse e-mail. Saisissez d’abord votre mot de passe actuel.",
+      "current": "Mot de passe actuel",
+      "sendCode": "Envoyer le code",
+      "codeSent": "Nous avons envoyé un code à 6 chiffres à {{email}}. Il est valable 10 minutes.",
+      "code": "Code reçu par e-mail",
+      "submit": "Modifier le mot de passe",
+      "newCode": "Envoyer un nouveau code",
+      "done": "Votre mot de passe a été modifié. Les autres appareils ont été déconnectés.",
+      "invalidPassword": "Le mot de passe actuel est incorrect.",
+      "invalidCode": "Le code est incorrect ou a expiré."
+    },
+    "confirmEmail": {
+      "title": "Nouvelle adresse e-mail",
+      "confirming": "Confirmation de votre nouvelle adresse e-mail…",
+      "done": "Votre adresse e-mail a été modifiée. Utilisez-la désormais pour vous connecter.",
+      "invalid": "Ce lien est invalide ou a expiré. Refaites la demande dans les réglages.",
+      "offline": "Pas de connexion. Ouvrez à nouveau le lien lorsque vous êtes en ligne.",
+      "error": "Une erreur est survenue. Veuillez réessayer."
+    }
   }
 }

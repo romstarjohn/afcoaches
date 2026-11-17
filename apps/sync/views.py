@@ -1,6 +1,7 @@
 import logging
 
 from django.db import transaction
+from drf_spectacular.utils import extend_schema, inline_serializer
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,6 +26,25 @@ class PushSerializer(serializers.Serializer):
     operations = OperationSerializer(many=True, allow_empty=False, max_length=MAX_BATCH)
 
 
+@extend_schema(
+    request=PushSerializer,
+    responses=inline_serializer(
+        "SyncPushResponse",
+        {
+            "results": serializers.ListField(
+                child=inline_serializer(
+                    "SyncPushResult",
+                    {
+                        "op_id": serializers.UUIDField(),
+                        "status": serializers.ChoiceField(choices=["applied", "conflict", "rejected"]),
+                        "error": serializers.CharField(required=False),
+                        "server_updated_at": serializers.DateTimeField(required=False),
+                    },
+                )
+            )
+        },
+    ),
+)
 class SyncPushView(APIView):
     """Apply a batch of offline operations. Each operation succeeds or fails on its own.
 

@@ -1,4 +1,4 @@
-# Backlog: Food library content: licensed sources and 150 verified West African dishes
+# Backlog: Food library content: licensed sources and 150 verified African dishes
 
 - **ID:** 000011
 - **Slug:** food-library-content

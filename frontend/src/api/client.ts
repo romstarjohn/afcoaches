@@ -19,6 +19,16 @@ export class AuthRequiredError extends ApiError {}
 /** No network / server unreachable: the caller should keep data locally and retry later. */
 export class NetworkError extends Error {}
 
+/** HTTP 429. Still a NetworkError for the sync engine (retry later), but forms can read the detail. */
+export class RateLimitedError extends NetworkError {
+  readonly detail: unknown
+
+  constructor(detail: unknown) {
+    super('server 429')
+    this.detail = detail
+  }
+}
+
 let csrfToken: string | null = null
 let language = 'fr'
 
@@ -71,11 +81,13 @@ export async function request<T>(method: string, url: string, body?: unknown, re
   if (response.status === 401 || response.status === 403) {
     if (!isCsrfFailure(data)) throw new AuthRequiredError(response.status, data)
   }
-  if (response.status >= 500 || response.status === 429) throw new NetworkError(`server ${response.status}`)
+  if (response.status === 429) throw new RateLimitedError(data)
+  if (response.status >= 500) throw new NetworkError(`server ${response.status}`)
   throw new ApiError(response.status, data)
 }
 
 export const api = {
   get: <T>(url: string) => request<T>('GET', url),
   post: <T>(url: string, body: unknown) => request<T>('POST', url, body),
+  patch: <T>(url: string, body: unknown) => request<T>('PATCH', url, body),
 }

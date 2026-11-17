@@ -1,16 +1,21 @@
 """Django settings for coachsurmesure.
 
-All environment-specific values come from environment variables (see .env.example).
-Never commit secrets. DEBUG defaults to False so a missing variable fails safe.
+All environment-specific values come from environment variables (see .env.example); a local .env file is
+read with django-dotenv (real environment variables always win). Never commit secrets.
+DJANGO_ENV selects "dev" or "prod" and defaults to "prod", so a missing variable fails safe.
 """
 
 import os
+import sys
+from email.utils import formataddr
 from pathlib import Path
 
 import dj_database_url
+import dotenv
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.observability import build_logging
 from apps.core.security import add_pwa_headers, immutable_file_test
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,21 +29,19 @@ def env_list(name: str, default: str = "") -> list[str]:
     return [v.strip() for v in os.environ.get(name, default).split(",") if v.strip()]
 
 
-def load_dotenv(path: Path) -> None:
-    """Minimal .env loader for local development; real env vars always win."""
-    if not path.is_file():
-        return
-    for line in path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+_dotenv_file = BASE_DIR / ".env"
+if _dotenv_file.is_file():  # read_dotenv warns on a missing file; CI and production use real env vars
+    dotenv.read_dotenv(str(_dotenv_file))
 
+# Environment flag: "dev" (local work, tests) or "prod" (staging/production). Selects logging profile,
+# log directory and the DEBUG default.
+APP_ENV = os.environ.get("DJANGO_ENV", "prod").strip().lower()
+if APP_ENV not in {"dev", "prod"}:
+    raise ImproperlyConfigured(f"DJANGO_ENV must be 'dev' or 'prod', got {APP_ENV!r}")
 
-load_dotenv(BASE_DIR / ".env")
-
-DEBUG = env_bool("DJANGO_DEBUG", False)
+DEBUG = env_bool("DJANGO_DEBUG", APP_ENV == "dev")
+if DEBUG and APP_ENV != "dev":
+    raise ImproperlyConfigured("DJANGO_DEBUG=true is only allowed with DJANGO_ENV=dev")
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
@@ -61,6 +64,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "apps.core",
     "apps.accounts",
+    "apps.mailer",
     "apps.api",
     "apps.sync",
 ]
@@ -68,6 +72,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
+    "apps.core.middleware.RequestLogMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "apps.core.security.ContentSecurityPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -112,8 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Internationalisation: France-first, French default, English available.
-LANGUAGE_CODE = "fr"
+# Internationalisation: France-first, English default (product decision 2026-11-17), French available.
+LANGUAGE_CODE = "en"
 LANGUAGES = [("fr", _("French")), ("en", _("English"))]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "Europe/Paris"
@@ -152,7 +157,17 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
         "rest_framework.throttling.ScopedRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "60/min", "user": "600/min", "sync": "120/min"},
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "60/min",
+        "user": "600/min",
+        "sync": "120/min",
+        "register": "10/hour",
+        "verify": "30/hour",
+        "resend": "10/hour",
+        "login": "60/hour",
+        "password_reset": "10/hour",
+        "account": "10/hour",
+    },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "UNAUTHENTICATED_USER": "django.contrib.auth.models.AnonymousUser",
 }
@@ -183,9 +198,52 @@ if not DEBUG:
 # HSTS preload is hard to undo; it is a conscious decision for backlog 000020, not a default.
 SILENCED_SYSTEM_CHECKS = ["security.W021"]
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {"console": {"class": "logging.StreamHandler"}},
-    "root": {"handlers": ["console"], "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO")},
-}
+# Logging: separate dev/prod profiles, rotating files in <DJANGO_LOG_DIR or ./logs>/<dev|prod>/.
+# If the directory cannot be created (e.g. read-only filesystem), fall back to console only.
+LOG_DIR: Path | None = Path(os.environ.get("DJANGO_LOG_DIR") or BASE_DIR / "logs") / APP_ENV
+try:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+except OSError as exc:
+    print(f"WARNING: log directory {LOG_DIR} unavailable ({exc}); logging to console only", file=sys.stderr)  # noqa: T201
+    LOG_DIR = None
+LOGGING = build_logging(APP_ENV, LOG_DIR, os.environ.get("DJANGO_LOG_LEVEL"))
+
+
+# Email: console in development, SMTP configured via environment elsewhere (no secrets in the repo).
+EMAIL_BACKEND = os.environ.get(
+    "DJANGO_EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend" if DEBUG else "django.core.mail.backends.smtp.EmailBackend",
+)
+EMAIL_HOST = os.environ.get("DJANGO_EMAIL_HOST", "localhost")
+EMAIL_PORT = int(os.environ.get("DJANGO_EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("DJANGO_EMAIL_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("DJANGO_EMAIL_TLS", True)
+EMAIL_TIMEOUT = int(os.environ.get("DJANGO_EMAIL_TIMEOUT", "10"))  # seconds; Django default is "wait forever"
+# Sender of all platform mails: "DJANGO_CONTACT_NAME <DJANGO_CONTACT_MAIL>".
+CONTACT_NAME = os.environ.get("DJANGO_CONTACT_NAME", "Coach sur mesure")
+CONTACT_MAIL = os.environ.get("DJANGO_CONTACT_MAIL", "noreply@localhost")
+DEFAULT_FROM_EMAIL = formataddr((CONTACT_NAME, CONTACT_MAIL))
+
+# Public base URL used in links inside emails. Never derived from the request's Host header.
+SITE_URL = os.environ.get("DJANGO_SITE_URL", "").rstrip("/") or (
+    "http://localhost:8000" if DEBUG else (f"https://{ALLOWED_HOSTS[0]}" if ALLOWED_HOSTS else "")
+)
+EMAIL_VERIFICATION_MAX_AGE = 60 * 60 * 24 * 3  # verification links are valid for 3 days
+
+# Login lockout: after this many failed attempts for an email (existing or not), logins for it are
+# refused for the lockout period. Counted per email in the cache, so unknown emails behave identically.
+LOGIN_MAX_FAILURES = 5
+LOGIN_LOCKOUT_SECONDS = 15 * 60
+
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 2  # reset links are valid for 2 hours and work once
+
+VERIFICATION_CODE_TTL = 10 * 60  # email codes (password change) are valid for 10 minutes
+VERIFICATION_CODE_MAX_ATTEMPTS = 5
+
+# Mail outbox (apps.mailer): mails are queued in the request and sent by `manage.py send_mail_outbox`.
+MAILER_SEND_INLINE = env_bool("DJANGO_MAILER_INLINE")  # dev shortcut: send at once, no worker needed
+MAILER_COOLDOWN_SECONDS = 60  # no second mail of the same kind to the same address within this time
+MAILER_MAX_ATTEMPTS = 5
+MAILER_BACKOFF_SECONDS = 60  # 1, 2, 4, 8 minutes between attempts
+MAILER_RETENTION_DAYS = 14  # finished outbox rows are deleted after this

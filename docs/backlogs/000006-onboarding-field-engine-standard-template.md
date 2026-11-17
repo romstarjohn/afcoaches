@@ -8,7 +8,7 @@
 ## Summary
 
 Build the questionnaire engine (field types, validation, conditions, versioning) and the platform standard
-template derived from market intake forms plus West African nutrition fields.
+template derived from market intake forms plus African nutrition fields.
 
 ## Reference
 

@@ -9,7 +9,7 @@ Origin: written for this repo from observed code (`frontend/src/index.css`, `ind
 
 ## Audience and context
 
-West African diaspora in France, FR default and EN, mostly phone use, often in gyms and kitchens: one hand, bright or dim light, unstable connectivity. Coaches also use desktop. Design mobile first at 360 px; verify on desktop and on iOS Safari and Android Chrome.
+People with an African background in France, FR default and EN, mostly phone use, often in gyms and kitchens: one hand, bright or dim light, unstable connectivity. Coaches also use desktop. Design mobile first at 360 px; verify on desktop and on iOS Safari and Android Chrome.
 
 ## Precedence between the design skills
 
@@ -78,7 +78,7 @@ Do not communicate state by color alone (`--ok`/`--warn`/`--offline` need icon o
 
 - FR strings run ~20–30% longer than EN: no fixed-width buttons or truncation of key labels; test every screen in both languages.
 - No hard-coded strings (Definition of Done §1); date, number, decimal comma and unit formatting via `Intl` per locale.
-- Food names: West African dish names and diacritics must render correctly; don't uppercase or truncate them.
+- Food names: African dish names and diacritics must render correctly; don't uppercase or truncate them.
 - Tone: plain, respectful, sentence case, active verbs; reuse the same action name through a whole flow.
 
 ## Accessibility (baseline for every screen)

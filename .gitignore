@@ -10,6 +10,10 @@ __pycache__/
 .env.*
 !.env.example
 
+# Logs (written by the app, see docs/observability.md)
+logs/
+*.log
+
 # Django
 staticfiles/
 media/

@@ -3,18 +3,19 @@
 - **Status:** draft v0.2 (2026-11-17) — to be confirmed by product owner
   - v0.2: client activity feedback with images, reminders, client profile summary, coach-editable requirements
   - v0.3: onboarding questionnaire (platform standard template → coach questionnaire → versioned answers)
+  - v0.5: observability rules referenced from the Item DoD (§1); logging details in `observability.md`
   - v0.4: offline-first PWA (SPA + API), offline save and sync on reconnect (§2.8); stack decided (§5 #3)
 - **Applies to:** MVP of the coachsurmesure platform
 - **Basis:** market analysis of 2026-11-17 (coach platforms vs. African-food trackers)
 
 ## 0. What we are building (one paragraph)
 
-A **multi-coach platform** for fitness and nutrition coaches serving people with a **West African background**,
+A **multi-coach platform** for fitness and nutrition coaches serving people with an **African background**,
 launched in **France**, available in **French and English**. Coaches manage paying clients with training and
 nutrition plans. Anyone can register in a few steps, **follow** a coach and see the coach's public plans in a
 feed — **read-only, never asked to send results**. Only **clients registered with a coach** send activity
 feedback and images and are prompted to do so; the coach sees a **profile summary per client** and adjusts the
-client's requirements and plans from it. The differentiator is a **verified West African food and dish
+client's requirements and plans from it. The differentiator is a **verified African food and dish
 library** inside a coach tool; competitors are either African-food trackers without coaching (AfriCal, Didiye,
 NaijaFit, TropiNutri) or coach platforms without African food data (Trainerize, Everfit, AZEOO).
 
@@ -41,6 +42,7 @@ A backlog item is only closed as `done` when **all** apply:
 - [ ] No secrets, tokens or real personal data in code, fixtures, logs or screenshots.
 - [ ] If it touches personal or health data: data inventory (§2.6) updated.
 - [ ] If it changes the data model: migration is reversible or rollback is documented.
+- [ ] Backend changes are observable and log-safe per [`observability.md`](observability.md) §3 (failures and permission denials logged with IDs and request id, no personal data or secrets in logs).
 - [ ] Deployed to staging and checked there.
 - [ ] Follow-ups found during the work are captured as backlog items (with deferral context), not left in heads.
 
@@ -116,7 +118,7 @@ to followers (see §2.2) — enforced on the server, covered by tests.
 
 1. **Platform standard template** — maintained by platform admins, derived from the fields that are common in
    market intake forms (contact, goals, health screening, injuries/medication, activity level, availability,
-   lifestyle, nutrition habits, consent) and extended with West African nutrition fields. Versioned.
+   lifestyle, nutrition habits, consent) and extended with African nutrition fields. Versioned.
 2. **Coach questionnaire** — created from the standard template. Standard fields are inherited; the coach can
    hide optional standard fields, reorder them, adjust help text, and **add custom fields** at any time.
    The coach **cannot change type or meaning** of a standard field, because standard fields feed the client
@@ -175,7 +177,7 @@ to followers (see §2.2) — enforced on the server, covered by tests.
 - [ ] **Source and licence documented** for every imported dataset; commercial use is confirmed in writing
       where required (open question: FAO/INFOODS West African table licence — see §5).
 - [ ] Ingredients carry: name FR, name EN, local names, region/country, nutrients per 100 g, source, licence.
-- [ ] **≥ 150 West African dishes** composed from ingredients with gram amounts and portion sizes, covering at
+- [ ] **≥ 150 African dishes** composed from ingredients with gram amounts and portion sizes, covering at
       least the cuisines the pilot coach uses (target: 50 must-have dishes defined with the pilot coach).
 - [ ] **100 %** of dishes visible to coaches are marked **verified** by a qualified nutrition professional
       (name and date stored); unverified entries are admin-only.

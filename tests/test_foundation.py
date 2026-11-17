@@ -20,7 +20,7 @@ def test_healthz_reports_database_ok(client):
 
 def test_supported_languages_are_fr_and_en():
     assert [code for code, _ in settings.LANGUAGES] == ["fr", "en"]
-    assert settings.LANGUAGE_CODE == "fr"
+    assert settings.LANGUAGE_CODE == "en"
 
 
 @pytest.fixture

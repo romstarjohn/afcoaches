@@ -15,7 +15,7 @@ function initialLanguage(): Language {
   } catch {
     // storage unavailable (private mode): fall through
   }
-  return navigator.language?.toLowerCase().startsWith('en') ? 'en' : 'fr'
+  return navigator.language?.toLowerCase().startsWith('fr') ? 'fr' : 'en'
 }
 
 function apply(lang: string) {
@@ -26,7 +26,7 @@ function apply(lang: string) {
 void i18n.use(initReactI18next).init({
   resources: { fr: { translation: fr }, en: { translation: en } },
   lng: initialLanguage(),
-  fallbackLng: 'fr',
+  fallbackLng: 'en',
   interpolation: { escapeValue: false }, // React escapes already
 })
 apply(i18n.language)

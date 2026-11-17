@@ -1,7 +1,30 @@
 {
   "app": {
     "name": "Coach sur mesure",
-    "tagline": "Fitness and nutrition coaching rooted in West African cuisine."
+    "tagline": "Fitness and nutrition coaching rooted in African cuisine."
+  },
+  "nav": {
+    "label": "Main menu",
+    "home": "Home",
+    "coaches": "Coaches",
+    "settings": "Settings"
+  },
+  "coaches": {
+    "title": "Coaches",
+    "empty": "Coaches you can follow will appear here soon."
+  },
+  "settings": {
+    "title": "Settings",
+    "languageTitle": "Language",
+    "languageHelp": "Choose the language of the app. It is saved on this device.",
+    "account": {
+      "title": "Account",
+      "signedInAs": "Signed in as",
+      "signedOut": "You are not logged in.",
+      "verified": "Email address verified.",
+      "notVerified": "Email address not verified yet. Some features stay locked until you confirm it.",
+      "logout": "Log out"
+    }
   },
   "lang": {
     "label": "Language",
@@ -40,5 +63,105 @@
     "ios": "On iPhone: tap “Share”, then “Add to Home Screen” to install the app and use it offline.",
     "action": "Install",
     "later": "Not now"
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "submit": "Log in",
+      "forgot": "Forgot password?",
+      "noAccount": "No account yet?"
+    },
+    "fields": {
+      "email": "Email address",
+      "password": "Password",
+      "name": "Your name",
+      "language": "Language",
+      "newPassword": "New password",
+      "showPassword": "Show password",
+      "passwordHint": "At least {{count}} characters."
+    },
+    "errors": {
+      "invalidCredentials": "Email or password is incorrect.",
+      "tooManyAttempts": "Too many attempts. Please wait 15 minutes and try again.",
+      "network": "No connection. Logging in needs an internet connection.",
+      "generic": "Something went wrong. Please try again.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordShort": "Use at least {{count}} characters.",
+      "nameRequired": "Enter your name.",
+      "tooManyRequests": "Too many requests. Please try again later."
+    },
+    "register": {
+      "title": "Create account",
+      "step": "Step {{current}} of {{total}}",
+      "next": "Continue",
+      "back": "Back",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?"
+    },
+    "checkInbox": {
+      "title": "Check your inbox",
+      "body": "We sent a link to {{email}}. If you already had an account with this address, simply log in."
+    },
+    "verify": {
+      "title": "Email address",
+      "verifying": "Confirming your email address…",
+      "verified": "Your email address is confirmed. Thank you!",
+      "invalid": "This link is invalid or has expired. Log in and request a new email from the banner.",
+      "offline": "No connection. Open the link again when you are online.",
+      "error": "Something went wrong. Please try again."
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "intro": "Enter your email address and we will send you a link to choose a new password.",
+      "submit": "Send link",
+      "sent": "If an account exists for this address, a link is on its way. It is valid for 2 hours."
+    },
+    "reset": {
+      "title": "New password",
+      "submit": "Save password",
+      "done": "Your password was changed. You can log in now.",
+      "invalid": "This link is invalid or has expired. Request a new one."
+    },
+    "banner": {
+      "label": "Email verification",
+      "text": "Please confirm your email address. Check your inbox for our message.",
+      "resend": "Resend email",
+      "sent": "Email sent. Check your inbox."
+    }
+  },
+  "account": {
+    "back": "Back to settings",
+    "save": "Save",
+    "saved": "Saved.",
+    "name": {
+      "title": "Change name"
+    },
+    "email": {
+      "title": "Change email address",
+      "newEmail": "New email address",
+      "submit": "Send confirmation link",
+      "sent": "We sent a link to {{email}}. Your address changes as soon as you open it."
+    },
+    "password": {
+      "title": "Change password",
+      "intro": "For your security we send a code to your email address. First enter your current password.",
+      "current": "Current password",
+      "sendCode": "Send code",
+      "codeSent": "We sent a 6-digit code to {{email}}. It is valid for 10 minutes.",
+      "code": "Code from the email",
+      "submit": "Change password",
+      "newCode": "Send a new code",
+      "done": "Your password was changed. Other devices were logged out.",
+      "invalidPassword": "Current password is incorrect.",
+      "invalidCode": "The code is wrong or has expired."
+    },
+    "confirmEmail": {
+      "title": "New email address",
+      "confirming": "Confirming your new email address…",
+      "done": "Your email address was changed. Use it to log in from now on.",
+      "invalid": "This link is invalid or has expired. Request the change again in the settings.",
+      "offline": "No connection. Open the link again when you are online.",
+      "error": "Something went wrong. Please try again."
+    }
   }
 }

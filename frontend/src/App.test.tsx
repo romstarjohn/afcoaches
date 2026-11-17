@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
@@ -14,15 +14,34 @@ function renderAt(path: string) {
 }
 
 describe('App shell', () => {
-  it('renders in French by default and switches to English', async () => {
-    await act(() => i18n.changeLanguage('fr'))
+  it('renders in English by default (no saved or browser preference)', async () => {
+    localStorage.clear()
+    await act(() => i18n.changeLanguage('en'))
     renderAt('/')
-    expect(screen.getByRole('heading', { name: 'Bienvenue' })).toBeInTheDocument()
-    expect(document.documentElement.lang).toBe('fr')
-
-    await userEvent.click(screen.getByRole('button', { name: /EN/ }))
     expect(screen.getByRole('heading', { name: 'Welcome' })).toBeInTheDocument()
     expect(document.documentElement.lang).toBe('en')
+  })
+
+  it('offers a bottom navigation with the main sections', async () => {
+    await act(() => i18n.changeLanguage('en'))
+    renderAt('/')
+    const nav = screen.getByRole('navigation', { name: 'Main menu' })
+    expect(within(nav).getAllByRole('link').map((l) => l.textContent)).toEqual(['Home', 'Coaches', 'Settings'])
+    expect(within(nav).getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page')
+    await userEvent.click(within(nav).getByRole('link', { name: 'Coaches' }))
+    expect(screen.getByRole('heading', { name: 'Coaches' })).toBeInTheDocument()
+  })
+
+  it('lets the user change the language in the settings and remembers it', async () => {
+    await act(() => i18n.changeLanguage('en'))
+    renderAt('/settings')
+    expect(screen.getByRole('radio', { name: 'English' })).toBeChecked()
+
+    await userEvent.click(screen.getByRole('radio', { name: 'Français' }))
+    expect(screen.getByRole('heading', { name: 'Réglages' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'Français' })).toBeChecked()
+    expect(document.documentElement.lang).toBe('fr')
+    expect(localStorage.getItem('csm.lang')).toBe('fr')
   })
 
   it('shows the offline notice when there is no connection', async () => {

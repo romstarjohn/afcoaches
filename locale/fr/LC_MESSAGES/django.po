@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 13:24+0100\n"
+"POT-Creation-Date: 2026-11-17 14:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,154 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: config/settings.py:117
+#: apps/accounts/emails.py:56
+msgid "Confirm your email address"
+msgstr "Confirmez votre adresse e-mail"
+
+#: apps/accounts/emails.py:58
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Please confirm your email address to finish setting up your account:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 3 days. If you did not create an account, ignore this "
+"email."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"Veuillez confirmer votre adresse e-mail pour terminer la création de votre "
+"compte :\n"
+"%(link)s\n"
+"\n"
+"Le lien est valable 3 jours. Si vous n’avez pas créé de compte, ignorez cet "
+"e-mail."
+
+#: apps/accounts/emails.py:71
+msgid "You already have an account"
+msgstr "Vous avez déjà un compte"
+
+#: apps/accounts/emails.py:73
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Someone tried to create an account with this email address, but you already "
+"have one. You can simply log in. If you forgot your password, use “Forgot "
+"password” on the login page.\n"
+"\n"
+"If this was not you, ignore this email."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"Quelqu’un a essayé de créer un compte avec cette adresse e-mail, mais vous "
+"en avez déjà un. Il vous suffit de vous connecter. Si vous avez oublié votre "
+"mot de passe, utilisez « Mot de passe oublié » sur la page de connexion.\n"
+"\n"
+"Si ce n’était pas vous, ignorez cet e-mail."
+
+#: apps/accounts/emails.py:99
+msgid "Reset your password"
+msgstr "Réinitialisez votre mot de passe"
+
+#: apps/accounts/emails.py:101
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Use this link to choose a new password:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 2 hours and can be used once. If you did not ask for "
+"this, ignore this email: your password stays unchanged."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"Utilisez ce lien pour choisir un nouveau mot de passe :\n"
+"%(link)s\n"
+"\n"
+"Le lien est valable 2 heures et ne peut être utilisé qu’une fois. Si vous "
+"n’êtes pas à l’origine de cette demande, ignorez cet e-mail : votre mot de "
+"passe reste inchangé."
+
+#: apps/accounts/emails.py:117
+msgid "Your verification code"
+msgstr "Votre code de vérification"
+
+#: apps/accounts/emails.py:119
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Your code to change your password is: %(code)s\n"
+"\n"
+"It is valid for 10 minutes. If you did not ask for this, someone may know "
+"your password: please change it."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"Votre code pour modifier votre mot de passe est : %(code)s\n"
+"\n"
+"Il est valable 10 minutes. Si vous n’êtes pas à l’origine de cette demande, quelqu’un connaît peut-être votre mot de passe : veuillez le modifier."
+
+#: apps/accounts/emails.py:149
+msgid "Confirm your new email address"
+msgstr "Confirmez votre nouvelle adresse e-mail"
+
+#: apps/accounts/emails.py:151
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"Confirm this address as the new email of your account:\n"
+"%(link)s\n"
+"\n"
+"The link is valid for 3 days. If you did not ask for this, ignore this email."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"Confirmez cette adresse comme nouvelle adresse e-mail de votre compte :\n"
+"%(link)s\n"
+"\n"
+"Le lien est valable 3 jours. Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail."
+
+#: apps/accounts/emails.py:164
+msgid "Your email address was changed"
+msgstr "Votre adresse e-mail a été modifiée"
+
+#: apps/accounts/emails.py:166
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"The email address of your account was changed to %(new)s. If this was not "
+"you, reset your password immediately and contact us."
+msgstr ""
+"Bonjour %(name)s,\n"
+"\n"
+"L’adresse e-mail de votre compte a été modifiée en %(new)s. Si ce n’était pas vous, réinitialisez immédiatement votre mot de passe et contactez-nous."
+
+#: apps/accounts/models.py:36
+msgid "Member"
+msgstr "Membre"
+
+#: apps/accounts/models.py:39
+msgid "email address"
+msgstr "adresse e-mail"
+
+#: apps/accounts/models.py:40
+msgid "display name"
+msgstr "nom affiché"
+
+#: apps/accounts/models.py:41
+msgid "language"
+msgstr "langue"
+
+#: config/settings.py:120
 msgid "French"
 msgstr "Français"
 
-#: config/settings.py:117
+#: config/settings.py:120
 msgid "English"
 msgstr "Anglais"

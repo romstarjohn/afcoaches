@@ -38,6 +38,7 @@ jobs:
           --health-cmd "pg_isready -U coach" --health-interval 5s --health-retries 10
     env:
       DATABASE_URL: postgres://coach:coach@localhost:5432/coachsurmesure
+      DJANGO_ENV: dev
       DJANGO_DEBUG: "true"
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +59,9 @@ jobs:
         run: pytest
       - name: Deploy checklist
         env:
+          DJANGO_ENV: prod
           DJANGO_DEBUG: "false"
+          DJANGO_LOG_DIR: ${{ runner.temp }}/logs
           DJANGO_SECRET_KEY: ci-only-${{ github.run_id }}-not-a-real-secret-value-0123456789abcdef
           DJANGO_ALLOWED_HOSTS: example.invalid
         run: python manage.py check --deploy --fail-level WARNING

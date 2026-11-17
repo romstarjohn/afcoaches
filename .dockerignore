@@ -5,6 +5,7 @@
 **/__pycache__
 staticfiles
 media
+logs
 docs
 tests
 frontend/node_modules
