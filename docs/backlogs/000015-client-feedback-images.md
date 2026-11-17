@@ -31,3 +31,7 @@ check-ins with progress photos. Images are the most sensitive data of the platfo
 ## Notes
 
 Depends on: plan-visibility-assignment-feed, client-invitation-consent. Hosting choice depends on decision-hds-hosting.
+
+Offline: feedback and check-ins must work offline via the sync contract in `docs/architecture.md` (register a
+sync handler, Dexie table, pending/failed UI). Decide whether photos are stored offline (IndexedDB is not
+encrypted).

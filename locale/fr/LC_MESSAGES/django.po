@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 12:52+0100\n"
+"POT-Creation-Date: 2026-11-17 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,26 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: apps/core/templates/core/home.html:4
-msgid "Welcome to Coach sur mesure"
-msgstr "Bienvenue sur Coach sur mesure"
 
-#: apps/core/templates/core/home.html:5
-msgid "Fitness and nutrition coaching rooted in West African cuisine."
-msgstr "Coaching sportif et nutritionnel ancré dans la cuisine d'Afrique de l'Ouest."
-
-#: config/settings.py:110
+#: config/settings.py:117
 msgid "French"
 msgstr "Français"
 
-#: config/settings.py:110
+#: config/settings.py:117
 msgid "English"
 msgstr "Anglais"
-
-#: templates/base.html:16
-msgid "Language"
-msgstr "Langue"
-
-#: templates/base.html:26
-msgid "Change"
-msgstr "Changer"

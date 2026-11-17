@@ -15,7 +15,7 @@ Everything required to put real users on the platform safely.
 
 ## Scope Hint
 
-- PWA manifest/service worker, installable on iOS/Android
+- PWA manifest/service worker already in place (000001); verify installability and offline shell on real devices
 - Performance budget (LCP < 2.5 s mid-range phone/4G); accessibility check of core flows
 - Production environment in EU; automated deploy; rollback tested once
 - Daily backups; restore tested once; monitoring/alerting; no personal data in logs

@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "Coach sur mesure",
+    "tagline": "Coaching sportif et nutritionnel ancré dans la cuisine d’Afrique de l’Ouest."
+  },
+  "lang": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English"
+  },
+  "status": {
+    "online": "En ligne",
+    "offline": "Hors ligne – vos données sont enregistrées sur l’appareil",
+    "syncing": "Synchronisation…",
+    "pending_one": "{{count}} modification à synchroniser",
+    "pending_other": "{{count}} modifications à synchroniser",
+    "failed_one": "{{count}} modification refusée – à vérifier",
+    "failed_other": "{{count}} modifications refusées – à vérifier",
+    "authRequired": "Reconnectez-vous pour synchroniser vos données",
+    "error": "Synchronisation impossible pour le moment – vos données restent sur l’appareil",
+    "retry": "Réessayer"
+  },
+  "pwa": {
+    "updateAvailable": "Une nouvelle version est disponible.",
+    "update": "Mettre à jour",
+    "offlineReady": "L’application est prête à fonctionner hors ligne.",
+    "dismiss": "Fermer"
+  },
+  "home": {
+    "title": "Bienvenue",
+    "intro": "Vos plans d’entraînement et de nutrition, même sans connexion."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "back": "Retour à l’accueil"
+  },
+  "install": {
+    "title": "Installer l’application",
+    "body": "Ajoutez Coach sur mesure à votre écran d’accueil pour l’ouvrir en un geste, même hors ligne.",
+    "ios": "Sur iPhone : touchez « Partager » puis « Sur l’écran d’accueil » pour installer l’application et l’utiliser hors ligne.",
+    "action": "Installer",
+    "later": "Plus tard"
+  }
+}

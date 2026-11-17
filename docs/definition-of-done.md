@@ -3,6 +3,7 @@
 - **Status:** draft v0.2 (2026-11-17) — to be confirmed by product owner
   - v0.2: client activity feedback with images, reminders, client profile summary, coach-editable requirements
   - v0.3: onboarding questionnaire (platform standard template → coach questionnaire → versioned answers)
+  - v0.4: offline-first PWA (SPA + API), offline save and sync on reconnect (§2.8); stack decided (§5 #3)
 - **Applies to:** MVP of the coachsurmesure platform
 - **Basis:** market analysis of 2026-11-17 (coach platforms vs. African-food trackers)
 
@@ -218,6 +219,22 @@ to followers (see §2.2) — enforced on the server, covered by tests.
 
 ---
 
+### 2.8 Offline & sync (installed PWA)
+
+Architecture and sync contract: `docs/architecture.md`.
+
+- [ ] App shell opens **without network** once installed (iOS Safari, Android Chrome).
+- [ ] **Clients** can record activity feedback and check-ins offline (incl. photos, if the photo opt-in exists);
+      entries are **saved on the device** and synced automatically when the connection returns.
+- [ ] **Assigned plans and followed public plans** that were opened before are readable offline.
+- [ ] The UI always shows whether data is synced, pending or refused; **no offline entry is ever silently lost**
+      (refused entries stay visible until the user resolves them).
+- [ ] Sync is idempotent (no duplicates after retries) and resumes after app restart, reconnect and re-login.
+- [ ] Updates of the app are offered, never forced while unsynced input exists.
+- [ ] Logout wipes all personal data from the device (IndexedDB, caches).
+- [ ] Coach features are **online-first** in the MVP (plan building, client summary); offline editing for coaches is
+      out of scope.
+
 ## 3. Project DoD — pilot validated
 
 The MVP is a means; the project is done when the pilot shows whether the platform is worth scaling.
@@ -265,7 +282,7 @@ Captured as backlog items, not part of this DoD:
 |---|---|---|
 | 1 | Licence of FAO/INFOODS West African Food Composition Table for commercial use (possibly non-commercial only) | **open — blocker for §2.5** |
 | 2 | HDS certification required for client check-in data? | **open — legal advice needed** |
-| 3 | Tech stack: Django + PostgreSQL + HTMX/PWA, EU hosting (Scaleway/OVH) | recommended, not yet confirmed |
+| 3 | Tech stack: Django + DRF + PostgreSQL API, React/Vite SPA as offline-first PWA, same-origin, EU hosting | **decided 2026-11-17** (see `docs/architecture.md`) |
 | 4 | Qualified nutrition professional for dish verification (who, cost) | open |
 | 5 | Pilot targets in §3 | proposals, to be confirmed |
 | 6 | Business model for coaches after pilot | out of MVP scope, decided at go/no-go |

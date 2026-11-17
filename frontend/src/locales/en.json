@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "Coach sur mesure",
+    "tagline": "Fitness and nutrition coaching rooted in West African cuisine."
+  },
+  "lang": {
+    "label": "Language",
+    "fr": "Français",
+    "en": "English"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline – your data is saved on this device",
+    "syncing": "Syncing…",
+    "pending_one": "{{count}} change waiting to sync",
+    "pending_other": "{{count}} changes waiting to sync",
+    "failed_one": "{{count}} change was refused – please review",
+    "failed_other": "{{count}} changes were refused – please review",
+    "authRequired": "Log in again to sync your data",
+    "error": "Sync failed for now – your data stays on this device",
+    "retry": "Retry"
+  },
+  "pwa": {
+    "updateAvailable": "A new version is available.",
+    "update": "Update",
+    "offlineReady": "The app is ready to work offline.",
+    "dismiss": "Dismiss"
+  },
+  "home": {
+    "title": "Welcome",
+    "intro": "Your training and nutrition plans, even without a connection."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Back to home"
+  },
+  "install": {
+    "title": "Install the app",
+    "body": "Add Coach sur mesure to your home screen to open it in one tap, even offline.",
+    "ios": "On iPhone: tap “Share”, then “Add to Home Screen” to install the app and use it offline.",
+    "action": "Install",
+    "later": "Not now"
+  }
+}

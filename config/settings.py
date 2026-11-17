@@ -11,6 +11,8 @@ import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.security import add_pwa_headers, immutable_file_test
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -55,14 +57,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "drf_spectacular",
     "apps.core",
     "apps.accounts",
+    "apps.api",
+    "apps.sync",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "apps.core.security.ContentSecurityPolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -78,7 +85,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -115,7 +122,14 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# The SPA build (frontend/dist) is served from the site root by WhiteNoise: /assets/*, /sw.js,
+# /manifest.webmanifest, icons. index.html is served by apps.core.views.spa_index for all app routes.
+SPA_DIST_DIR = BASE_DIR / "frontend" / "dist"
+WHITENOISE_ROOT = SPA_DIST_DIR if SPA_DIST_DIR.is_dir() else None
+WHITENOISE_IMMUTABLE_FILE_TEST = immutable_file_test
+WHITENOISE_ADD_HEADERS_FUNCTION = add_pwa_headers
+WHITENOISE_MIMETYPES = {".webmanifest": "application/manifest+json"}
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
@@ -126,6 +140,30 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# API: session + CSRF auth only (same-origin SPA). No tokens in localStorage, no CORS.
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework.authentication.SessionAuthentication"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser"],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.ScopedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {"anon": "60/min", "user": "600/min", "sync": "120/min"},
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "UNAUTHENTICATED_USER": "django.contrib.auth.models.AnonymousUser",
+}
+SPECTACULAR_SETTINGS = {"TITLE": "Coach sur mesure API", "VERSION": "1", "SERVE_INCLUDE_SCHEMA": False}
+
+# Sessions: the installed app works offline for days, so sessions are long-lived but sliding.
+# Data written offline stays in the device outbox until the user is logged in again (never dropped).
+SESSION_COOKIE_AGE = int(os.environ.get("DJANGO_SESSION_AGE", str(60 * 60 * 24 * 30)))
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
 
 # Security: strict by default outside DEBUG. Run `manage.py check --deploy` in CI.
 SESSION_COOKIE_HTTPONLY = True

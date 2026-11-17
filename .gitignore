@@ -19,3 +19,8 @@ media/
 # IDE (keep shared run configs out too; workspace is personal)
 .idea/
 .DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dev-dist/

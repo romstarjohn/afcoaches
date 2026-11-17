@@ -38,10 +38,14 @@ Depends on: nothing. Tech-stack confirmation by product owner is part of this it
 ### Progress (2026-11-17)
 
 - Done: Django 5.2 LTS project (`config/`, `apps/core`, `apps/accounts` with custom user model before first
-  migration), PostgreSQL via `DATABASE_URL` + docker-compose (port 55432), FR default / EN via `i18n_patterns`
-  and language switch, `/healthz`, secure settings (`check --deploy` clean, HSTS preload deliberately off),
+  migration), PostgreSQL via `DATABASE_URL` + docker-compose (port 55432), FR default / EN (now in the SPA via i18next;
+  Django gettext for admin/API), `/healthz`, secure settings (`check --deploy` clean, HSTS preload deliberately off),
   pytest + ruff, CI workflow `.github/workflows/ci.yml`, production Dockerfile (smoke-tested locally), README,
-  `git init` (no commit yet).
-- Tech stack: product owner gave go-ahead to implement on Django (2026-11-17).
-- Open before closing: (1) push to a remote so CI actually runs; (2) staging environment in the EU — blocked
+  git repository.
+- Tech stack: product owner gave go-ahead to implement on Django (2026-11-17), then decided on an
+  offline-first SPA + API (see `docs/architecture.md`). Implemented: DRF API (`/api/v1/auth/csrf`,
+  `/api/v1/auth/me`, `/api/v1/sync/push` + sync registry), React/Vite PWA in `frontend/` (manifest, icons,
+  service worker with update prompt, install hint, Dexie outbox + SyncEngine, FR/EN), strict CSP, multi-stage
+  Dockerfile (smoke-tested), CI jobs for backend and frontend. Pushed to GitHub (`origin/main`).
+- Open before closing: (1) confirm CI is green on GitHub; (2) staging environment in the EU — blocked
   by hosting decision `000023-decision-hds-hosting` and access/credentials to a hosting account.
